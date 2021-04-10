@@ -9,29 +9,52 @@ pdfParser.pdf2json(PDF_PATHtwo, function (error, pdf) {
     if(error != null){
         console.log(error);
     }else{
-      const companyName = pdf.pages[0].texts[0].text;
-      const companyAddress = pdf.pages[0].texts[2].text;
-      const sampleIs = pdf.pages[0].texts[5].text;
+      // const companyName = pdf.pages[0].texts[0].text;
+      // const companyAddress = pdf.pages[0].texts[2].text;
+      // const sampleIs = pdf.pages[0].texts[5].text;
       // const lot = `lot# ${pdf.pages[0].texts[9].text}`;
       // const testNumber = pdf.pages[0].texts[15].text;
-      // const testResults = pdf.pages[0].texts[25].text + "Score " + pdf.pages[0].texts[29].text;
+      const testResults = pdf.pages[0].texts[25].text + "Score " + pdf.pages[0].texts[29].text;
       // const GenesEffectedOne = pdf.pages[0].texts[33].text;
       // const GenesEffectedTwo = pdf.pages[0].texts[35].text;
       // const GenesEffectedThree = pdf.pages[0].texts[37].text + pdf.pages[0].texts[38].text + pdf.pages[0].texts[39].text
       // const GenesEffectedFour = pdf.pages[0].texts[41].text;
 
-      console.log(companyName);
-      console.log(companyAddress);
-      console.log(sampleIs);
+      // console.log(companyName);
+      // console.log(companyAddress);
+      // console.log(sampleIs);
       // console.log(lot);
       // console.log(testNumber);
-      // console.log(testResults);
+      console.log(testResults);
       // console.log(GenesEffectedOne);
       // console.log(GenesEffectedTwo);
       // console.log(GenesEffectedThree);
       // console.log(GenesEffectedFour);
 
-      // console.log(pdf.pages[0].texts[0].text);
+      const arrayOfTextObjects = pdf.pages[0].texts;
+
+      arrayOfTextObjects.map((textsObj, index) => {
+        if (textsObj.text.includes('Company Name')) {
+          console.log(textsObj.text);
+          return;
+        };
+        if (textsObj.text.includes('Address')) {
+          console.log(textsObj.text);
+          return;
+        };
+        if (textsObj.text.includes('Lot #')) {
+          // console.log('🪳');
+          console.log(textsObj.text + pdf.pages[0].texts[index + 1].text);
+          return;
+        };
+        if (textsObj.text.includes('%')) {
+          // console.log('🪳');
+          console.log("Score: " + textsObj.text);
+          return;
+        };
+      });
+
+      // console.log(pdf.pages[0].texts);
       // console.log(JSON.stringify(pdf));
     }
 });
